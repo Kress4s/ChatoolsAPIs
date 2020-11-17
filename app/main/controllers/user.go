@@ -1,11 +1,12 @@
 package controllers
 
 import (
-	"ChatoolsAPIs/app/bridage/common"
 	bridageModels "ChatoolsAPIs/app/bridage/models"
+	"ChatoolsAPIs/app/common"
 	"encoding/json"
 )
 
+// UserController ...
 type UserController struct {
 	common.BaseController
 }
@@ -29,9 +30,8 @@ func (c *UserController) Register() {
 	_, err = bridageModels.AddUser(&v)
 }
 
-// Register ...
-// @router /token [post]
-func (c *UserController) GenerateToken() {
+// GenerateAuthorization ...
+func (c *UserController) GenerateAuthorization() {
 	var token string
 	var err error
 	defer func() {
@@ -47,5 +47,5 @@ func (c *UserController) GenerateToken() {
 	if err = json.Unmarshal(c.Ctx.Input.RequestBody, &user); err != nil {
 		return
 	}
-	token, err = bridageModels.Generate(&user)
+	token, err = bridageModels.GenerateToken(&user)
 }

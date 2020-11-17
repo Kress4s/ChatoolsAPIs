@@ -1,19 +1,21 @@
 package models
 
 import (
-	"ChatoolsAPIs/app/bridage/common"
 	"ChatoolsAPIs/app/bridage/constant"
+	"ChatoolsAPIs/app/common"
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/astaxie/beego/httplib"
-	"github.com/astaxie/beego/logs"
-	"github.com/astaxie/beego/orm"
 	"io/ioutil"
 	"net/http"
 	"time"
+
+	"github.com/astaxie/beego/httplib"
+	"github.com/astaxie/beego/logs"
+	"github.com/astaxie/beego/orm"
 )
 
+// Bots ...
 type Bots struct {
 	ID    int64  `orm:"auto;column(id)"`
 	WXID  string `orm:"size(30);column(wx_id)"`
@@ -25,6 +27,7 @@ func init() {
 	orm.RegisterModel(new(Bots))
 }
 
+// GetQRCode ...
 func GetQRCode(token string) (ret interface{}, err error) {
 	o := orm.NewOrm()
 	var resp *http.Response
@@ -74,6 +77,7 @@ func GetQRCode(token string) (ret interface{}, err error) {
 	return restBody, nil
 }
 
+// WaitScanCodeAndRecodeBotInfo ...
 func WaitScanCodeAndRecodeBotInfo(ctx context.Context, bot *Bots) {
 	var restBody common.RestQRcode
 	var resp *http.Response

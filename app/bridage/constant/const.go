@@ -3,6 +3,7 @@ package constant
 const (
 	EXPEIRE_ACCOUNT_CODE   = 2000 //用户账户登录过期状态码
 	EXPEIRE_WXACCOUNT_CODE = 2001 //微信登录状态过期状态码(暂且不用)
+	TOKEN_IS_NIL           = 2002 //token为空
 )
 
 //header
@@ -15,9 +16,9 @@ const (
 
 // params
 const (
-	P_UUID      = "uuid"
-	P_WXID      = "wx_id"
-	P_TOKEN     = "token"
+	P_UUID  = "uuid"
+	P_WXID  = "wx_id"
+	P_TOKEN = "token"
 )
 
 // session

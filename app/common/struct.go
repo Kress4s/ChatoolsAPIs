@@ -9,9 +9,9 @@ type RestResult struct {
 
 // 标准的 rest 返回接口，字符小写化
 type StandRestResult struct {
-	Code    int         `json:"code"`    // 0 表示成功，其他失败
-	Message string      `json:"message"` // 错误信息
-	Data    interface{} `json:"data"`    // 数据体
+	Code    int         `json:"code"` // 0 表示成功，其他失败
+	Message string      `json:"msg"`  // 错误信息
+	Data    interface{} `json:"data"` // 数据体
 }
 
 // 扫码成功的check接口返回值

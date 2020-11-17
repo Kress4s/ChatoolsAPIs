@@ -1,20 +1,32 @@
 package main
 
 import (
+	"ChatoolsAPIs/app/bridage/exception"
+	_ "ChatoolsAPIs/app/bridage/models"
 	"ChatoolsAPIs/app/bridage/path"
+	_ "ChatoolsAPIs/app/common/dbmysql"
+	_ "ChatoolsAPIs/app/routers"
 	"fmt"
 	"os"
+	"reflect"
 
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/context"
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/plugins/cors"
 )
 
 func main() {
+	var checkAcess = func(ctx *context.Context) {
+		if token := ctx.Input.Header("Authorization"); token == "" {
+			ctx.Input.RunController = reflect.TypeOf(exception.GetInst())
+			ctx.Input.RunMethod = "ExceptToken"
+		}
+	}
 	//允许跨站访问
 	//if beego.BConfig.RunMode == "dev" {
-	//beego.InsertFilter("*", beego.BeforeRouter, sessDetection)
+	beego.InsertFilter("/v1/*", beego.BeforeRouter, checkAcess)
 	beego.InsertFilter("*", beego.BeforeRouter, cors.Allow(&cors.Options{
 		AllowAllOrigins:  true,
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
@@ -25,7 +37,7 @@ func main() {
 	//}
 	createDIR() //初始化必要目录
 	//设置日志规则
-	logs.SetLogger(logs.AdapterMultiFile, `{"filename":"logs/beta.log","separate":["error", "warning", "notice", "info", "debug"]}`)
+	logs.SetLogger(logs.AdapterMultiFile, `{"filename":"logs/chatools.log","separate":["error", "warning", "notice", "info", "debug"]}`)
 	logs.EnableFuncCallDepth(true)
 	beego.AddViewPath("template")
 	args := os.Args //获取用户输入的所有参数
