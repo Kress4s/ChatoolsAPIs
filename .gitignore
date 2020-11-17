@@ -1,0 +1,14 @@
+# vscode ================================
+/.vscode
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+*.a
+*.tmp
+/TODO
+/logs
+ChatoolsAPIs
