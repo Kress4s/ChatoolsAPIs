@@ -90,7 +90,15 @@ const (
 )
 
 // sns
-const ()
+const (
+	SNS_LIST_ME      = BASE_URL + "/sns/list/me"
+	SNS_LIST_FRIEND  = BASE_URL + "/sns/list/friend"
+	SNS_SEND_TEXT    = BASE_URL + "/sns/send/text"
+	SNS_SEND_IMAGE   = BASE_URL + "/sns/send/image"
+	SNS_SEND_VIDEO   = BASE_URL + "/sns/send/video"
+	SNS_UPLOAD_IMAGE = BASE_URL + "/sns/upload/image"
+	SNS_UPLOAD_VIDEO = BASE_URL + "/sns/upload/video"
+)
 
 // message info
 const (

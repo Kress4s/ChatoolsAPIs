@@ -27,3 +27,21 @@ type RestQRcode struct {
 		Status     string `json:"status"`
 	} `json:"data"`
 }
+
+// WXUser 微信联系人的结构体
+type WXUser struct {
+	WXID              string `json:"id"`
+	NickName          string `json:"nick_name"`
+	AliasName         string `json:"alias_name"`
+	Sex               int    `json:"sex"`
+	HeadBigImageURL   string `json:"head_big_image_url"`
+	HeadSmallImageURL string `json:"head_small_image_url"`
+	Inviter           string `json:"inviter"`
+	Friend            bool   `json:"friend"`
+}
+
+// AnnounceMent 设置群公告内容
+type AnnounceMent struct {
+	Announcement string `json:"announcement"`
+	GroupID      string `json:"group_id"`
+}

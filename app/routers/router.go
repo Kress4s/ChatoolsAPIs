@@ -15,6 +15,15 @@ func init() {
 		beego.NSNamespace("/contact",
 			beego.NSInclude(&controllers.ContactController{}),
 		),
+		beego.NSNamespace("/group",
+			beego.NSInclude(&controllers.GroupController{}),
+		),
+		beego.NSNamespace("/message",
+			beego.NSInclude(&controllers.MessageController{}),
+		),
+		beego.NSNamespace("/sns",
+			beego.NSInclude(&controllers.SnsControllers{}),
+		),
 	)
 	beego.AddNamespace(ns1)
 }
