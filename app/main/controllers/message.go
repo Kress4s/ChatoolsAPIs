@@ -4,6 +4,7 @@ import (
 	"ChatoolsAPIs/app/bridage/constant"
 	bridageModels "ChatoolsAPIs/app/bridage/models"
 	"ChatoolsAPIs/app/common"
+	"ChatoolsAPIs/app/main/models"
 	"encoding/json"
 	"fmt"
 )
@@ -79,4 +80,27 @@ func (c *MessageController) SendTheVideo() {
 	}
 	token := c.Ctx.Input.Header(constant.H_AUTHORIZATION)
 	l, err = bridageModels.SentVideoMessage(to, URL, token)
+}
+
+// SyncRecieveMessage 接受微信号消息
+// @router /sync/message/pushstream
+func (c *MessageController) SyncRecieveMessage() {
+	var l interface{}
+	var callbackAddr string
+	var err error
+	defer func() {
+		if err == nil {
+			c.Ctx.Output.SetStatus(201)
+			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok", Data: l}
+		} else {
+			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+		}
+		c.ServeJSON()
+	}()
+	if callbackAddr = c.GetString("callbackAddr"); callbackAddr == "" {
+		err = fmt.Errorf("callbackAddr cant be null")
+		return
+	}
+	token := c.Ctx.Input.Header(constant.H_AUTHORIZATION)
+	err = models.SyncRecieveMessageStream(callbackAddr, token)
 }

@@ -16,6 +16,15 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["ChatoolsAPIs/app/main/controllers:BotController"] = append(beego.GlobalControllerRouter["ChatoolsAPIs/app/main/controllers:BotController"],
+        beego.ControllerComments{
+            Method: "GetMyInfo",
+            Router: "/profile",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["ChatoolsAPIs/app/main/controllers:ContactController"] = append(beego.GlobalControllerRouter["ChatoolsAPIs/app/main/controllers:ContactController"],
         beego.ControllerComments{
             Method: "Betch",
@@ -146,6 +155,15 @@ func init() {
         beego.ControllerComments{
             Method: "SendTheVideo",
             Router: "/send/video",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ChatoolsAPIs/app/main/controllers:MessageController"] = append(beego.GlobalControllerRouter["ChatoolsAPIs/app/main/controllers:MessageController"],
+        beego.ControllerComments{
+            Method: "SyncRecieveMessage",
+            Router: "/sync/message/pushstream",
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,

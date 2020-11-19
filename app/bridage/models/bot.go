@@ -17,10 +17,11 @@ import (
 
 // Bots ...
 type Bots struct {
-	ID    int64  `orm:"auto;column(id)"`
-	WXID  string `orm:"size(30);column(wx_id)"`
-	Token string `orm:"size(50);column(token)"`
-	User  string `orm:"size(30);column(user)"`
+	ID          int64  `orm:"auto;column(id)"`
+	WXID        string `orm:"size(30);column(wx_id)"`
+	LoginStatus int    `orm:"column(login_status)"`
+	Token       string `orm:"size(50);column(token)"`
+	User        string `orm:"size(30);column(user)"`
 }
 
 func init() {
@@ -74,7 +75,7 @@ func GetQRCode(token string) (ret interface{}, err error) {
 	// 等待扫码接口（等待5分钟）
 	ctx, _ := context.WithTimeout(context.Background(), 5*60*time.Second)
 	go WaitScanCodeAndRecodeBotInfo(ctx, &bot)
-	return restBody, nil
+	return restBody.Data, nil
 }
 
 // WaitScanCodeAndRecodeBotInfo ...
@@ -107,13 +108,52 @@ L1:
 			if restBody.Code == 0 && restBody.Data.Status == "Confirmed" {
 				//var num int64
 				bot.WXID = restBody.Data.WXID
-				if _, err = o.Update(bot, "WXID"); err == nil {
+				bot.LoginStatus = 1
+				if _, err = o.Update(bot, "WXID", "LoginStatus"); err == nil {
 					logs.Debug("WaitScanCodeAndRecodeBotInfo: bot update WX_ID in database")
 				}
 				break L1
 			}
+			logs.Info("等待扫码中...")
 		}
 		// 等待用户操作
 		time.Sleep(2 * time.Second)
 	}
+}
+
+// GetMyProfile ...
+func GetMyProfile(token string) (ret interface{}, err error) {
+	type ProfileUser struct {
+		WXID              string `json:"wx_id"`
+		NickName          string `json:"nick_name"`
+		Alias             string `json:"alias"`
+		Sex               int    `json:"sex"`
+		Country           string `json:"country"`
+		Province          string `json:"province"`
+		City              string `json:"city"`
+		Signature         string `json:"signature"`
+		HeadBigImageURL   string `json:"big_head_img_url"`
+		HeadSmallImageURL string `json:"small_head_img_url"`
+	}
+	var bot ProfileUser
+	if err = httplib.Get(constant.WXUSER_PROFILE_URL).Header(constant.H_AUTHORIZATION, token).ToJSON(&bot); err != nil {
+		logs.Error("GetMyProfile: ToJSON failed, err is ", err.Error())
+		return nil, err
+	}
+	return bot, nil
+}
+
+// UpdateBotLoginStatusByToken ...
+func UpdateBotLoginStatusByToken(token string) (err error) {
+	o := orm.NewOrm()
+	var bot = Bots{Token: token}
+	if err = o.Read(&bot, "Token"); err == nil {
+		var num int64
+		bot.LoginStatus = 0
+		if num, err = o.Update(&bot, "LoginStatus"); err == nil {
+			logs.Debug("Number of User update in database:", num)
+			return
+		}
+	}
+	return
 }

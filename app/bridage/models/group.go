@@ -4,6 +4,7 @@ import (
 	"ChatoolsAPIs/app/bridage/constant"
 	"ChatoolsAPIs/app/common"
 	"fmt"
+	"strings"
 
 	"github.com/astaxie/beego/httplib"
 	"github.com/astaxie/beego/logs"
@@ -92,10 +93,10 @@ func GetGroupMembers(groupID, token string) (m interface{}, err error) {
 }
 
 // AddMember ...
-func AddMember(groupID, member, token string) (err error) {
+func AddMember(groupID, token string, members []string) (err error) {
 	var v = common.StandRestResult{}
-	if err = httplib.Get(constant.GROUP_ADD_MEMBERS_URL).Header(constant.H_AUTHORIZATION, token).Param("group_id", groupID).
-		Param("members", member).ToJSON(&v); err != nil {
+	var query = "?group_id=" + groupID + "&members=" + strings.Join(members, "&members=")
+	if err = httplib.Get(constant.GROUP_ADD_MEMBERS_URL+query).Header(constant.H_AUTHORIZATION, token).ToJSON(&v); err != nil {
 		logs.Error("GroupCreate: ToJSON failed, err is ", err.Error())
 		return err
 	}
@@ -107,10 +108,10 @@ func AddMember(groupID, member, token string) (err error) {
 }
 
 // DelMember ...
-func DelMember(groupID, member, token string) (err error) {
+func DelMember(groupID, token string, members []string) (err error) {
 	var v = common.StandRestResult{}
-	if err = httplib.Get(constant.GROUP_DEL_MEMBERS_URL).Header(constant.H_AUTHORIZATION, token).Param("group_id", groupID).
-		Param("members", member).ToJSON(&v); err != nil {
+	var query = "?group_id=" + groupID + "&members=" + strings.Join(members, "&members=")
+	if err = httplib.Get(constant.GROUP_DEL_MEMBERS_URL+query).Header(constant.H_AUTHORIZATION, token).ToJSON(&v); err != nil {
 		logs.Error("GroupCreate: ToJSON failed, err is ", err.Error())
 		return err
 	}

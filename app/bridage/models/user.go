@@ -50,6 +50,10 @@ func GenerateToken(m *User) (token string, err error) {
 	if err = o.Read(&user, "Account"); err != nil {
 		return "", err
 	}
+	if m.PassWord != user.PassWord {
+		err = fmt.Errorf("账号或者密码错误")
+		return "", err
+	}
 	var botNum int64
 	if botNum, err = o.QueryTable(new(Bots)).Filter("User", m.Account).Count(); int(botNum) >= user.BotNum {
 		err = fmt.Errorf("本账号token数量权限已满")
@@ -63,12 +67,12 @@ func GenerateToken(m *User) (token string, err error) {
 		logs.Error("insert bot failed, err is", err.Error())
 		return "", err
 	}
-	user.BotNum++
-	var num int64
-	if num, err = o.Update(&user, "BotNum"); err != nil {
-		logs.Error("update user failed, err is", err.Error())
-		return "", err
-	}
-	logs.Debug("Number of User update in database:", num)
+	// user.BotNum--
+	// var num int64
+	// if num, err = o.Update(&user, "BotNum"); err != nil {
+	// 	logs.Error("update user failed, err is", err.Error())
+	// 	return "", err
+	// }
+	// logs.Debug("Number of User update in database:", num)
 	return token, nil
 }

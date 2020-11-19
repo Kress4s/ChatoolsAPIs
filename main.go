@@ -48,7 +48,6 @@ func main() {
 	} else if len(args) == 2 {
 		switch args[1] {
 		case "start":
-			beego.BConfig.EnableGzip = true
 			beego.Run()
 		case "orm":
 			orm.RunCommand()

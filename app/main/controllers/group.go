@@ -111,7 +111,7 @@ func (c *GroupController) GetGroupMembers() {
 // @router /members/add [get]
 func (c *GroupController) AddGroupMember() {
 	var groupID string
-	var member string
+	var members []string
 	var err error
 	defer func() {
 		if err == nil {
@@ -122,19 +122,19 @@ func (c *GroupController) AddGroupMember() {
 		}
 		c.ServeJSON()
 	}()
-	if groupID, member = c.GetString("group_id"), c.GetString("members"); groupID == "" || member == "" {
+	if groupID, members = c.GetString("group_id"), c.GetStrings("members"); groupID == "" || len(members) == 0 {
 		err = fmt.Errorf("group_id or members cant be null")
 		return
 	}
 	token := c.Ctx.Input.Header(constant.H_AUTHORIZATION)
-	err = bridageModels.AddMember(groupID, member, token)
+	err = bridageModels.AddMember(groupID, token, members)
 }
 
 // DeleteGroupMember 删除群成员[群主]
 // @router /members/delete [get]
 func (c *GroupController) DeleteGroupMember() {
 	var groupID string
-	var member string
+	var members []string
 	var err error
 	defer func() {
 		if err == nil {
@@ -145,12 +145,12 @@ func (c *GroupController) DeleteGroupMember() {
 		}
 		c.ServeJSON()
 	}()
-	if groupID, member = c.GetString("group_id"), c.GetString("members"); groupID == "" || member == "" {
+	if groupID, members = c.GetString("group_id"), c.GetStrings("members"); groupID == "" || len(members) == 0 {
 		err = fmt.Errorf("group_id or members cant be null")
 		return
 	}
 	token := c.Ctx.Input.Header(constant.H_AUTHORIZATION)
-	err = bridageModels.DelMember(groupID, member, token)
+	err = bridageModels.DelMember(groupID, token, members)
 }
 
 // QuitGroup 退群

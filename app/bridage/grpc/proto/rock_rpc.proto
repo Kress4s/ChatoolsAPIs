@@ -1,0 +1,14 @@
+syntax = "proto3";
+package rock;
+option java_package = "rock.idl.proto";
+
+message StreamRequest{
+    string token = 1;
+}
+message StreamResponse{
+    uint32 cmdId = 1;// 同步的消息类别
+    string payload= 2; //同步的消息的JSON
+}
+service RockRpcServer{
+    rpc Sync(StreamRequest) returns (stream StreamResponse) {}
+}
