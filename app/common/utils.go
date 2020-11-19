@@ -27,5 +27,5 @@ func DetectGRPC() string {
 	}
 	defer resp.Body.Close()
 	content, _ := ioutil.ReadAll(resp.Body)
-	return string(content) + beego.AppConfig.String("httpport")
+	return string(content) + ":" + beego.AppConfig.String("httpport")
 }

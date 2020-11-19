@@ -48,7 +48,9 @@ func main() {
 	} else if len(args) == 2 {
 		switch args[1] {
 		case "start":
+			// if common.DetectGRPC() == constant.GRPC_RUN_SERVER {
 			beego.Run()
+			// }
 		case "orm":
 			orm.RunCommand()
 		default:
