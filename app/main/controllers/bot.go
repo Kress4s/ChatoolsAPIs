@@ -32,7 +32,7 @@ func (c *BotController) GetQR() {
 	}()
 	token := c.Ctx.Input.Header("Authorization")
 	if token == "" {
-		err = constant.NilAuthorization
+		err = constant.ErrNilAuthorization
 		return
 	}
 	v, err = bridageModels.GetQRCode(token)

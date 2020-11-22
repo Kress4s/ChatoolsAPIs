@@ -1,9 +1,11 @@
 package main
 
 import (
+	"ChatoolsAPIs/app/bridage/constant"
 	"ChatoolsAPIs/app/bridage/exception"
 	_ "ChatoolsAPIs/app/bridage/models"
 	"ChatoolsAPIs/app/bridage/path"
+	"ChatoolsAPIs/app/common"
 	_ "ChatoolsAPIs/app/common/dbmysql"
 	_ "ChatoolsAPIs/app/routers"
 	"fmt"
@@ -48,9 +50,9 @@ func main() {
 	} else if len(args) == 2 {
 		switch args[1] {
 		case "start":
-			// if common.DetectGRPC() == constant.GRPC_RUN_SERVER {
-			beego.Run()
-			// }
+			if common.DetectGRPC() == constant.GRPC_RUN_SERVER {
+				beego.Run()
+			}
 		case "orm":
 			orm.RunCommand()
 		default:
@@ -69,7 +71,7 @@ func main() {
 func cmdUsage() {
 	fmt.Println(`
 USAGE
-	betaSrv [commond]
+	Chatools [commond]
 AVAILABLE COMMANDS
 	start                     Start beta managerment server node.
 	orm                       Operate the database.

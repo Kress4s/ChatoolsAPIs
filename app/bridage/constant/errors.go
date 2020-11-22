@@ -3,5 +3,6 @@ package constant
 import "errors"
 
 var (
-	NilAuthorization = errors.New("Header Authorization Cant be null")
+	// ErrNilAuthorization token权限验证
+	ErrNilAuthorization = errors.New("Header Authorization Cant be null")
 )
