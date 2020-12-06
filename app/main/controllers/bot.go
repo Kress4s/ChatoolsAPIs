@@ -3,7 +3,8 @@ package controllers
 import (
 	"ChatoolsAPIs/app/bridage/constant"
 	bridageModels "ChatoolsAPIs/app/bridage/models"
-	"ChatoolsAPIs/app/common"
+
+	"github.com/York-xia/tools/curd/common"
 )
 
 // BotController ...

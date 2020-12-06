@@ -2,8 +2,9 @@ package models
 
 import (
 	"ChatoolsAPIs/app/bridage/constant"
-	"ChatoolsAPIs/app/common"
 	"fmt"
+
+	"github.com/York-xia/tools/curd/common"
 
 	"github.com/astaxie/beego/httplib"
 	"github.com/astaxie/beego/logs"
@@ -34,7 +35,7 @@ type result struct {
 // ContactBetch ...
 func ContactBetch(query, token string) (m interface{}, err error) {
 	var contact Contact
-	var v = common.StandRestResult{}
+	var v = common.StandardRestResult{}
 	v.Data = contact
 	if err = httplib.Get(constant.CONTACT_BATCH_URL+query).Header(constant.H_AUTHORIZATION, token).ToJSON(&v); err != nil {
 		logs.Error("ContactBetch: ToJSON failed, err is ", err.Error())
@@ -51,7 +52,7 @@ func ContactBetch(query, token string) (m interface{}, err error) {
 // ContactListAll ...
 func ContactListAll(room_contact_seq, wx_contact_seq, token string) (l interface{}, err error) {
 	var _v result
-	var v = common.StandRestResult{}
+	var v = common.StandardRestResult{}
 	v.Data = _v
 	query := "?room_contact_seq=" + room_contact_seq + "&wx_contact_seq=" + wx_contact_seq
 	if err = httplib.Get(constant.CONTACT_LIST_URL+query).Header(constant.H_AUTHORIZATION, token).ToJSON(&v); err != nil {
@@ -69,7 +70,7 @@ func ContactListAll(room_contact_seq, wx_contact_seq, token string) (l interface
 // ContactListGroup ...
 func ContactListGroup(room_contact_seq, wx_contact_seq, token string) (l interface{}, err error) {
 	var _v result
-	var v = common.StandRestResult{}
+	var v = common.StandardRestResult{}
 	v.Data = _v
 	query := "?room_contact_seq=" + room_contact_seq + "&wx_contact_seq=" + wx_contact_seq
 	if err = httplib.Get(constant.CONTACT_GROUP_LIST_URL+query).Header(constant.H_AUTHORIZATION, token).ToJSON(&v); err != nil {
@@ -87,7 +88,7 @@ func ContactListGroup(room_contact_seq, wx_contact_seq, token string) (l interfa
 // ContactSearch ...
 func ContactSearch(keyword, token string) (l interface{}, err error) {
 	var contact Contact
-	var v = common.StandRestResult{}
+	var v = common.StandardRestResult{}
 	v.Data = contact
 	if err = httplib.Get(constant.CONTACT_SEARCH_URL).Header(constant.H_AUTHORIZATION, token).Param("keyword", keyword).ToJSON(&v); err != nil {
 		logs.Error("ContactBetch: ToJSON failed, err is ", err.Error())

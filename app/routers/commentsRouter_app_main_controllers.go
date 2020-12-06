@@ -163,7 +163,7 @@ func init() {
     beego.GlobalControllerRouter["ChatoolsAPIs/app/main/controllers:MessageController"] = append(beego.GlobalControllerRouter["ChatoolsAPIs/app/main/controllers:MessageController"],
         beego.ControllerComments{
             Method: "SyncRecieveMessage",
-            Router: "/sync/message/pushstream",
+            Router: "/sync/pushstream",
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,

@@ -2,10 +2,11 @@ package models
 
 import (
 	"ChatoolsAPIs/app/bridage/constant"
-	"ChatoolsAPIs/app/common"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+
+	"github.com/York-xia/tools/curd/common"
 
 	"github.com/astaxie/beego/httplib"
 	"github.com/astaxie/beego/logs"
@@ -25,7 +26,7 @@ func SentTextMessage(m SendTextMessage, token string) (l interface{}, err error)
 		logs.Error("[%+v] send message to [%s] faield, err is %s", m.At[0], m.To, err.Error())
 		return nil, verr
 	}
-	var response common.StandRestResult
+	var response common.StandardRestResult
 	if err = res.ToJSON(&response); err != nil {
 		logs.Error("ToJSON: send text interface response failed, err is", err.Error())
 		return nil, err
@@ -49,7 +50,7 @@ func SentImageMessage(to, URL, token string) (l interface{}, err error) {
 	if body, err = ioutil.ReadAll(resp.Body); err != nil {
 		return nil, err
 	}
-	var response common.StandRestResult
+	var response common.StandardRestResult
 	if err = json.Unmarshal(body, &response); err != nil {
 		logs.Error("SendImage: json Unmarshal failed, err is ", err.Error())
 		return nil, err
@@ -79,7 +80,7 @@ func SentVideoMessage(to, URL, token string) (l interface{}, err error) {
 	if body, err = ioutil.ReadAll(resp.Body); err != nil {
 		return nil, err
 	}
-	var response common.StandRestResult
+	var response common.StandardRestResult
 	if err = json.Unmarshal(body, &response); err != nil {
 		logs.Error("SendImage: json Unmarshal failed, err is ", err.Error())
 		return nil, err

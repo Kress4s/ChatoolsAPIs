@@ -2,8 +2,9 @@ package models
 
 import (
 	"ChatoolsAPIs/app/bridage/constant"
-	"ChatoolsAPIs/app/common"
 	"fmt"
+
+	"github.com/York-xia/tools/curd/common"
 
 	"github.com/astaxie/beego/httplib"
 	"github.com/astaxie/beego/logs"
@@ -63,7 +64,7 @@ type VideoSns struct {
 // ListMySns ...
 func ListMySns(firstPageMd5, maxID, token string) (l interface{}, err error) {
 	var sns SnsList
-	var v = common.StandRestResult{}
+	var v = common.StandardRestResult{}
 	v.Data = sns
 	// 这里前两
 	if err = httplib.Get(constant.SNS_LIST_ME).Header(constant.H_AUTHORIZATION, token).Param("first_page_md5", firstPageMd5).Param("max_id", maxID).ToJSON(&v); err != nil {
@@ -76,7 +77,7 @@ func ListMySns(firstPageMd5, maxID, token string) (l interface{}, err error) {
 // ListMyFriend ...
 func ListMyFriend(firstPageMd5, maxID, WXID, token string) (l interface{}, err error) {
 	var sns SnsList
-	var v = common.StandRestResult{}
+	var v = common.StandardRestResult{}
 	v.Data = sns
 	// 这里前两个参数，第一次传空未测试
 	if err = httplib.Get(constant.SNS_LIST_ME).Header(constant.H_AUTHORIZATION, token).Param("wx_id", WXID).Param("first_page_md5", firstPageMd5).Param("max_id", maxID).ToJSON(&v); err != nil {
@@ -89,7 +90,7 @@ func ListMyFriend(firstPageMd5, maxID, WXID, token string) (l interface{}, err e
 // SendImageSns ...
 func SendImageSns(m ImageSns, token string) (ret interface{}, err error) {
 	var sns Sns
-	var v = common.StandRestResult{}
+	var v = common.StandardRestResult{}
 	v.Data = sns
 	req, verr := httplib.Post(constant.SNS_SEND_IMAGE).Header(constant.H_AUTHORIZATION, token).JSONBody(&m)
 	if verr != nil {
@@ -111,7 +112,7 @@ func SendImageSns(m ImageSns, token string) (ret interface{}, err error) {
 // SendTextSns ...
 func SendTextSns(m TextSns, token string) (ret interface{}, err error) {
 	var sns Sns
-	var v = common.StandRestResult{}
+	var v = common.StandardRestResult{}
 	v.Data = sns
 	req, verr := httplib.Post(constant.SNS_SEND_TEXT).Header(constant.H_AUTHORIZATION, token).JSONBody(&m)
 	if verr != nil {
@@ -133,7 +134,7 @@ func SendTextSns(m TextSns, token string) (ret interface{}, err error) {
 // SendVideoSns ...
 func SendVideoSns(m VideoSns, token string) (ret interface{}, err error) {
 	var sns Sns
-	var v = common.StandRestResult{}
+	var v = common.StandardRestResult{}
 	v.Data = sns
 	req, verr := httplib.Post(constant.SNS_SEND_VIDEO).Header(constant.H_AUTHORIZATION, token).JSONBody(&m)
 	if verr != nil {

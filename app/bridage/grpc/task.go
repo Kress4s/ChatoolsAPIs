@@ -71,7 +71,7 @@ func (c *BotWorker) Run() {
 			4. 通过websoket方式通知web端掉线的微信号
 		*/
 		// cancle() //通知所有的goroutine退出
-		if err = bridageModels.UpdateBotLoginStatusByToken(c.Token); err == nil {
+		if err = bridageModels.UpdateBotLoginStatusByToken(c.Token); err != nil {
 			logs.Info("%s has offlined, please check it to relogin", c.Token)
 		}
 		// wetsocket 通知前端
@@ -84,7 +84,7 @@ func (c *BotWorker) Run() {
 	}
 	grpcClient := pb.NewRockRpcServerClient(conn)
 	req := pb.StreamRequest{
-		Token: &c.Token,
+		Token: &(strings.Split(c.Token, " ")[1]),
 	}
 	res, verr := grpcClient.Sync(context.Background(), &req)
 	if verr != nil {
@@ -95,6 +95,7 @@ func (c *BotWorker) Run() {
 		fmt.Println("开始监控")
 		response, verr := res.Recv()
 		if verr != nil {
+			logs.Error("GRPC: res.Recv failed, err is ", err.Error())
 			break
 		}
 		if err = json.Unmarshal([]byte(*response.Payload), &message); err == nil {
@@ -112,9 +113,12 @@ func PushMessage(message common.ProtoMessage, callBackAddr string) {
 	if !strings.Contains(callBackAddr, "http://") {
 		callBackAddr = "http://" + callBackAddr
 	}
-	httplib.Post(callBackAddr).JSONBody(&message)
-	verr := recover()
-	if verr != nil {
+	resp, verr := httplib.Post(callBackAddr).JSONBody(&message)
+	if verr == nil {
+		resp.DoRequest()
+	}
+	_verr := recover()
+	if _verr != nil {
 		logs.Error(verr)
 	}
 }

@@ -3,10 +3,12 @@ package controllers
 import (
 	"ChatoolsAPIs/app/bridage/constant"
 	bridageModels "ChatoolsAPIs/app/bridage/models"
-	"ChatoolsAPIs/app/common"
+	localCommon "ChatoolsAPIs/app/common"
 	"encoding/json"
 	"fmt"
 	"strings"
+
+	"github.com/York-xia/tools/curd/common"
 )
 
 // GroupController ...
@@ -22,9 +24,9 @@ func (c *GroupController) Create() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok", Data: l}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok", Data: l}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()
@@ -47,9 +49,9 @@ func (c *GroupController) GetGroupInfoA() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok", Data: l}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok", Data: l}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()
@@ -70,9 +72,9 @@ func (c *GroupController) GetGroupInfoB() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok", Data: l}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok", Data: l}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()
@@ -93,9 +95,9 @@ func (c *GroupController) GetGroupMembers() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok", Data: l}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok", Data: l}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()
@@ -116,9 +118,9 @@ func (c *GroupController) AddGroupMember() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok"}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok"}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()
@@ -139,9 +141,9 @@ func (c *GroupController) DeleteGroupMember() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok"}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok"}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()
@@ -161,9 +163,9 @@ func (c *GroupController) QuitGroup() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok"}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok"}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()
@@ -182,13 +184,13 @@ func (c *GroupController) SetAnnounceMent() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok"}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok"}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()
-	var announce common.AnnounceMent
+	var announce localCommon.AnnounceMent
 	if err = json.Unmarshal(c.Ctx.Input.RequestBody, &announce); err != nil {
 		return
 	}

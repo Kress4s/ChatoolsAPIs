@@ -3,9 +3,10 @@ package controllers
 import (
 	"ChatoolsAPIs/app/bridage/constant"
 	bridageModels "ChatoolsAPIs/app/bridage/models"
-	"ChatoolsAPIs/app/common"
 	"fmt"
 	"strings"
+
+	"github.com/York-xia/tools/curd/common"
 )
 
 // ContactController ...
@@ -26,9 +27,9 @@ func (c *ContactController) Betch() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok", Data: l}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok", Data: l}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()
@@ -50,9 +51,9 @@ func (c *ContactController) ListAll() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok", Data: l}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok", Data: l}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()
@@ -75,9 +76,9 @@ func (c *ContactController) ListGroup() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok", Data: l}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok", Data: l}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()
@@ -100,9 +101,9 @@ func (c *ContactController) Search() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok", Data: l}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok", Data: l}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()

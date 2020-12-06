@@ -6,11 +6,12 @@ import (
 	_ "ChatoolsAPIs/app/bridage/models"
 	"ChatoolsAPIs/app/bridage/path"
 	"ChatoolsAPIs/app/common"
-	_ "ChatoolsAPIs/app/common/dbmysql"
 	_ "ChatoolsAPIs/app/routers"
 	"fmt"
 	"os"
 	"reflect"
+
+	_ "github.com/York-xia/tools/curd/dbmysql"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"

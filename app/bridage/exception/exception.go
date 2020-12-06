@@ -2,7 +2,8 @@ package exception
 
 import (
 	"ChatoolsAPIs/app/bridage/constant"
-	"ChatoolsAPIs/app/common"
+
+	"github.com/York-xia/tools/curd/common"
 )
 
 // ExceptionController ...

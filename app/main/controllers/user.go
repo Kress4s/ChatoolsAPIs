@@ -2,8 +2,9 @@ package controllers
 
 import (
 	bridageModels "ChatoolsAPIs/app/bridage/models"
-	"ChatoolsAPIs/app/common"
 	"encoding/json"
+
+	"github.com/York-xia/tools/curd/common"
 )
 
 // UserController ...

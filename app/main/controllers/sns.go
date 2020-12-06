@@ -3,9 +3,10 @@ package controllers
 import (
 	"ChatoolsAPIs/app/bridage/constant"
 	bridageModels "ChatoolsAPIs/app/bridage/models"
-	"ChatoolsAPIs/app/common"
 	"encoding/json"
 	"fmt"
+
+	"github.com/York-xia/tools/curd/common"
 )
 
 // SnsControllers ...
@@ -21,9 +22,9 @@ func (c *SnsControllers) ListMe() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok", Data: l}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok", Data: l}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()
@@ -41,9 +42,9 @@ func (c *SnsControllers) ListMyFriendSns() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok", Data: l}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok", Data: l}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()
@@ -65,9 +66,9 @@ func (c *SnsControllers) SendImageAndTextSns() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok", Data: l}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok", Data: l}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()
@@ -87,9 +88,9 @@ func (c *SnsControllers) SendTheTextSns() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok", Data: l}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok", Data: l}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()
@@ -109,9 +110,9 @@ func (c *SnsControllers) SendTheVideoSns() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok", Data: l}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok", Data: l}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()

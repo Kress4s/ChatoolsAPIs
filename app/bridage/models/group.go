@@ -2,9 +2,11 @@ package models
 
 import (
 	"ChatoolsAPIs/app/bridage/constant"
-	"ChatoolsAPIs/app/common"
+	localCommon "ChatoolsAPIs/app/common"
 	"fmt"
 	"strings"
+
+	"github.com/York-xia/tools/curd/common"
 
 	"github.com/astaxie/beego/httplib"
 	"github.com/astaxie/beego/logs"
@@ -22,7 +24,7 @@ type Group struct {
 // GroupCreate ...
 func GroupCreate(query, token string) (m interface{}, err error) {
 	var group Group
-	var v = common.StandRestResult{}
+	var v = common.StandardRestResult{}
 	v.Data = group
 	if err = httplib.Get(constant.GROUP_CREATE_URL+query).Header(constant.H_AUTHORIZATION, token).ToJSON(&v); err != nil {
 		logs.Error("GroupCreate: ToJSON failed, err is ", err.Error())
@@ -44,7 +46,7 @@ func GetGroupAnnounce(groupID, token string) (m interface{}, err error) {
 		AnnouncementPublishTime string `json:"announcement_publish_time"`
 	}
 	var info Info
-	var v = common.StandRestResult{}
+	var v = common.StandardRestResult{}
 	v.Data = info
 	if err = httplib.Get(constant.GROUP_DETAIL_URL).Header(constant.H_AUTHORIZATION, token).Param("group_id", groupID).ToJSON(&v); err != nil {
 		logs.Error("GroupCreate: ToJSON failed, err is ", err.Error())
@@ -61,7 +63,7 @@ func GetGroupAnnounce(groupID, token string) (m interface{}, err error) {
 // GetGroupInfo ...
 func GetGroupInfo(groupID, token string) (m interface{}, err error) {
 	var group Group
-	var v = common.StandRestResult{}
+	var v = common.StandardRestResult{}
 	v.Data = group
 	if err = httplib.Get(constant.GROUP_INFO_URL).Header(constant.H_AUTHORIZATION, token).Param("group_id", groupID).ToJSON(&v); err != nil {
 		logs.Error("GroupCreate: ToJSON failed, err is ", err.Error())
@@ -77,8 +79,8 @@ func GetGroupInfo(groupID, token string) (m interface{}, err error) {
 
 // GetGroupMembers ...
 func GetGroupMembers(groupID, token string) (m interface{}, err error) {
-	var Members []*common.WXUser
-	var v = common.StandRestResult{}
+	var Members []*localCommon.WXUser
+	var v = common.StandardRestResult{}
 	v.Data = Members
 	if err = httplib.Get(constant.GROUP_MEMBERS_URL).Header(constant.H_AUTHORIZATION, token).Param("group_id", groupID).ToJSON(&v); err != nil {
 		logs.Error("GroupCreate: ToJSON failed, err is ", err.Error())
@@ -94,7 +96,7 @@ func GetGroupMembers(groupID, token string) (m interface{}, err error) {
 
 // AddMember ...
 func AddMember(groupID, token string, members []string) (err error) {
-	var v = common.StandRestResult{}
+	var v = common.StandardRestResult{}
 	var query = "?group_id=" + groupID + "&members=" + strings.Join(members, "&members=")
 	if err = httplib.Get(constant.GROUP_ADD_MEMBERS_URL+query).Header(constant.H_AUTHORIZATION, token).ToJSON(&v); err != nil {
 		logs.Error("GroupCreate: ToJSON failed, err is ", err.Error())
@@ -109,7 +111,7 @@ func AddMember(groupID, token string, members []string) (err error) {
 
 // DelMember ...
 func DelMember(groupID, token string, members []string) (err error) {
-	var v = common.StandRestResult{}
+	var v = common.StandardRestResult{}
 	var query = "?group_id=" + groupID + "&members=" + strings.Join(members, "&members=")
 	if err = httplib.Get(constant.GROUP_DEL_MEMBERS_URL+query).Header(constant.H_AUTHORIZATION, token).ToJSON(&v); err != nil {
 		logs.Error("GroupCreate: ToJSON failed, err is ", err.Error())
@@ -124,7 +126,7 @@ func DelMember(groupID, token string, members []string) (err error) {
 
 // QuitFromGroup ...
 func QuitFromGroup(groupID, token string) (err error) {
-	var v = common.StandRestResult{}
+	var v = common.StandardRestResult{}
 	if err = httplib.Get(constant.GROUP_QUIT_URL).Header(constant.H_AUTHORIZATION, token).Param("group_id", groupID).ToJSON(&v); err != nil {
 		logs.Error("GroupCreate: ToJSON failed, err is ", err.Error())
 		return err
@@ -137,8 +139,8 @@ func QuitFromGroup(groupID, token string) (err error) {
 }
 
 // SetAnnounce ...
-func SetAnnounce(announce common.AnnounceMent, token string) (err error) {
-	var v = common.StandRestResult{}
+func SetAnnounce(announce localCommon.AnnounceMent, token string) (err error) {
+	var v = common.StandardRestResult{}
 	resp, verr := httplib.Post(constant.GROUP_SET_ANNOUNCE_URL).Header(constant.H_AUTHORIZATION, token).JSONBody(&announce)
 	if verr != nil {
 		logs.Error("SetAnnounce: ToJSON failed, err is ", err.Error())

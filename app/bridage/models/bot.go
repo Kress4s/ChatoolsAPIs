@@ -2,13 +2,15 @@ package models
 
 import (
 	"ChatoolsAPIs/app/bridage/constant"
-	"ChatoolsAPIs/app/common"
+	localCommon "ChatoolsAPIs/app/common"
 	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"time"
+
+	"github.com/York-xia/tools/curd/common"
 
 	"github.com/astaxie/beego/httplib"
 	"github.com/astaxie/beego/logs"
@@ -67,7 +69,7 @@ func GetQRCode(token string) (ret interface{}, err error) {
 		logs.Error("get URL[%s] body failed, err is ", constant.LOGIN_QRCODE_URL, err.Error())
 		return
 	}
-	var restBody common.StandRestResult
+	var restBody common.StandardRestResult
 	if err = json.Unmarshal(body, &restBody); err != nil {
 		logs.Error("json.Unmarshal qrcode failed, err is ", err.Error())
 		return
@@ -80,7 +82,7 @@ func GetQRCode(token string) (ret interface{}, err error) {
 
 // WaitScanCodeAndRecodeBotInfo ...
 func WaitScanCodeAndRecodeBotInfo(ctx context.Context, bot *Bots) {
-	var restBody common.RestQRcode
+	var restBody localCommon.RestQRcode
 	var resp *http.Response
 	var err error
 	o := orm.NewOrm()

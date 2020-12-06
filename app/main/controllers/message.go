@@ -3,10 +3,11 @@ package controllers
 import (
 	"ChatoolsAPIs/app/bridage/constant"
 	bridageModels "ChatoolsAPIs/app/bridage/models"
-	"ChatoolsAPIs/app/common"
 	"ChatoolsAPIs/app/main/models"
 	"encoding/json"
 	"fmt"
+
+	"github.com/York-xia/tools/curd/common"
 )
 
 // MessageController ...
@@ -22,9 +23,9 @@ func (c *MessageController) SendTheText() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok", Data: l}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok", Data: l}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()
@@ -45,9 +46,9 @@ func (c *MessageController) SendTheImage() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok", Data: l}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok", Data: l}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()
@@ -68,9 +69,9 @@ func (c *MessageController) SendTheVideo() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok", Data: l}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok", Data: l}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()
@@ -83,7 +84,7 @@ func (c *MessageController) SendTheVideo() {
 }
 
 // SyncRecieveMessage 接受微信号消息
-// @router /sync/message/pushstream
+// @router /sync/pushstream
 func (c *MessageController) SyncRecieveMessage() {
 	var l interface{}
 	var callbackAddr string
@@ -91,9 +92,9 @@ func (c *MessageController) SyncRecieveMessage() {
 	defer func() {
 		if err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.StandRestResult{Code: 0, Message: "ok", Data: l}
+			c.Data["json"] = common.StandardRestResult{Code: 0, Message: "ok", Data: l}
 		} else {
-			c.Data["json"] = common.StandRestResult{Code: -1, Message: err.Error()}
+			c.Data["json"] = common.StandardRestResult{Code: -1, Message: err.Error()}
 		}
 		c.ServeJSON()
 	}()
